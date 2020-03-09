@@ -6,7 +6,8 @@ using namespace std;
 int input[9];
 int sum;
 int main(void){
-
+//test
+//test2
     for(int i=0;i<9;i++){
         cin>>input[i];
         sum +=input[i];
