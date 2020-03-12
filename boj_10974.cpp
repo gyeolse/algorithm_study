@@ -1,4 +1,4 @@
-//10974. 모든 순열
+//10974. 모든 순열 
 
 #include <iostream>
 #include <algorithm>
