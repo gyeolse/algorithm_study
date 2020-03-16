@@ -2,8 +2,10 @@
 
 /*
     (1) pair 구조체 first, second; //IN utility
+        pair<int,int> p = make_pair(a,b);
     (2) typedef 구조체 정의 별칭 지정.
-    
+
+
 */
 #include <iostream>
 #include <map>
@@ -11,10 +13,10 @@
 using namespace std;
 int n;
 
-typedef pair<char, char> pr;
-map<char,pr> mp;
+//typedef pair<char, char> pr;
+//map<char,pr> mp;
 //key 자료형, value 자료형, 변수
-
+map<char,pair<char,char>> mp;
 //preorder
 //postorder
 //inorder
@@ -48,7 +50,7 @@ int main(void){
     char parent,left,right;
     for(int i=0;i<n;i++){
         cin>>parent>>left>>right;
-        mp[parent] = pr(left,right);
+        mp[parent] = make_pair(left,right);
     }
     //전,중,후 pre in post
     preorder('A');
