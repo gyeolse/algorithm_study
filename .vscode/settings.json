@@ -10,7 +10,8 @@
         "string_view": "cpp",
         "initializer_list": "cpp",
         "type_traits": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "ostream": "cpp"
     },
     "cmake.configureOnOpen": true
 }
