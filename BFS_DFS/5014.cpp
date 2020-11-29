@@ -7,8 +7,6 @@ int visit[1000000]; //해당 칸까지 가는데 드는 최소 횟수 저장. 0�
 int total,current,office,up,down; //F: 총 S: 현재, G: 사무실층, U:몇층만큼 올라가기 가능?, D:몇층만큼 내려가기 가능?
 int main() {
     cin>>total>>current>>office>>up>>down; //10 1 10 2 1
-
-    //queue
     queue<int> que;
     //1. 현재 층에서 일단 시작하게 됨.
     visit[current] = 1;
@@ -16,22 +14,17 @@ int main() {
 
     while(!que.empty()){
         int cur = que.front(); que.pop(); //현재 층이 들어가있음.
-
         int arr[2] = {cur+up,cur-down};
         for(int i=0;i<2;i++){
-            if(arr[i]>total || arr[i]<=0) continue;
-            if(visit[arr[i]]!=0 ) continue;
-            visit[arr[i]] = visit[cur] + 1;
-            que.push(arr[i]);
+            int temp = arr[i];
+            if(temp>total || temp<=0) continue;
+            if(visit[temp]!=0 ) continue;
+            visit[temp] = visit[cur] + 1;
+            que.push(temp);
         }
     }
 
-    // for(int i=0;i<total;i++){
-    //     cout<<visit[i]<<" ";
-    // }
-    // cout<<visit[office]<<" ";
     if(visit[office]==0) cout<<"use the stairs";
-    else cout<<(visit[office]-1);
-
+    else cout<<(visit[office]-1); //-1을 하는 이유. ~번 이동인데, 처음 설정해줄때, 1로 두고 설정해줌. 때문에 -1을 해주어야함. 
     return 0;
 }
