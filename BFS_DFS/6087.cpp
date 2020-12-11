@@ -66,6 +66,6 @@ int main() {
         }
         cout<<endl;
     }
-    cout<<visit[destPosition.first][destPosition.second]-1<<"\n";
+    cout<<visit[destPosition.first][destPosition.second]-1<<"\n"; //거울이 없는 상태에서도 1로 시작하게 되니 마지막에 1을 빼주어야함.
 
 }
