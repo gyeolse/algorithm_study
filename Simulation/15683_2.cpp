@@ -12,7 +12,12 @@ bool isAvailable(int x, int y) {
 }
 
 void upd(int x, int y, int dir) { //# 처리
-    dir %= 4; // ? 왜 또해주나 ?? 시간초과가 남
+    /** dir %=4를 또 해주는이유 (예제 4,5의 경우 해주지 않으면 시간초과)
+     * dir+3을 해서 upd 함수 안에 들어오는 경우, 4 이상이 되는 경우가 생길 수 있으므로,
+     * mod 처리를 해줘야한다.
+     * */
+    dir %= 4; // ? 왜 또해주는지
+
     while (1) {
         x += dirX[dir];
         y += dirY[dir];
@@ -43,8 +48,6 @@ int main() {
             for (int j = 0;j < m;j++) {
                 board2[i][j] = board1[i][j];
             }
-
-
         // numOfCase를 진법으로 나누면, 각 cctv가 바라보는 위치가 세팅된다.
         int curCase = numOfCase;
         for (int i = 0;i < cctv.size();i++) {
