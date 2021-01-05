@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <iostream>
-
 using namespace std;
-
 int n, m;
 int board1[10][10];
 int board2[10][10];
@@ -10,54 +7,59 @@ int board2[10][10];
 int dirX[4] = { 1,0,-1,0 };
 int dirY[4] = { 0,1,0,-1 };
 
-vector<pair<int, int>> vec;
-
+vector<pair<int, int>> cctv; //cctv가 있는 곳의 위치 저장
 
 bool isAvailable(int x, int y) {
+    //방문하지 못하는 경우 == 범위를 넘는 경우
     if (x < 0 || y < 0 || x >= n || y >= m) return false;
     return true;
 }
-void upd(int x, int y, int dir) { //못갈때까지 계속 간다 
+
+void upd(int x, int y, int dir) {
+    //방문 체킹
     dir %= 4;
     while (1) {
         x += dirX[dir];
         y += dirY[dir];
 
-        if (!isAvailable(x, y) || board2[x][y] == 6) return;
-        if (board2[x][y] != 0) continue;
-        board2[x][y] = 7;
+        if (!isAvailable(x,y) || board2[x][y] == 6) return; //못 간다. 막혔다.
+        if (board2[x][y] != 0) continue; //갈 수는 있는데, 이미 진행함.
+        board2[x][y] = 7; //cctv 감시할 수 있는 부분 설정
     }
+
 }
 
-int main(void) {
-    int _min = 0;
-    cin >> n >> m; //4 6
+int main() {
+    int min_square_area = 0; // 사각지대 최소 크기
+    //1. input
+    cin >> n >> m;
 
     for (int i = 0;i < n;i++) {
         for (int j = 0;j < m;j++) {
             cin >> board1[i][j];
-            if (board1[i][j] != 6 && board1[i][j] != 0) vec.push_back({ i,j });
-            if (board1[i][j] == 0) _min++;
+            if (board1[i][j] != 0 && board1[i][j] != 6) cctv.push_back({ i,j }); //벽이 아니고, 빈 칸이 아닌 경우 
+            if (board1[i][j] == 0) min_square_area++; //벽이 아니고, 0인 경우
         }
     }
 
-    //1. cctv의 갯수만큼 shift. cur이 cctv의 갯수에 따라. cctv 경우의 수만큼 돌 것임
-    for (int cur = 0;cur < (1 << (2 * vec.size()));cur++) {
-        //board1 to board2 (이번 loop에서 사용할 board)
+    //2. cctv의 위치에서 주위 탐색 시작
+    //1) cctv의 갯수에 따른 경우의 수 => 순열 => 진법에 따라서 
+    for (int numOfCase = 0;numOfCase < (1 << (2 * cctv.size()));numOfCase++) {
+        //이번 loop에서 쓸 board2배열
         for (int i = 0;i < n;i++) {
             for (int j = 0;j < m;j++) {
                 board2[i][j] = board1[i][j];
             }
         }
 
-        int temp = cur;
-        for (int i = 0;i < vec.size();i++) {
-            //3. 방향이 4개 이므로, 4로 나눠주는 걸 계속 해줌
-            //4. 각 방향별로 세팅을 해줌.
+        //2) cctv 위치 세팅  => 각 순서에 맞게 값 변환 
+        int temp = numOfCase;
+        for (int i = 0;i < cctv.size();i++) {
             int dir = temp % 4;
             temp /= 4;
-            int x = vec[i].first;
-            int y = vec[i].second;
+            int x = cctv[i].first;
+            int y = cctv[i].second;
+
             if (board1[x][y] == 1) {
                 upd(x, y, dir);
             }
@@ -81,16 +83,17 @@ int main(void) {
                 upd(x, y, dir + 3);
             }
         }
-        //5. min 값 비교
-        int tmp = 0;
+        //3) 최소 영역 측정
+        int curArea = 0;
         for (int i = 0;i < n;i++) {
             for (int j = 0;j < m;j++) {
-                if (board2[i][j] == 0) tmp++;
+                if (board2[i][j] == 0) {
+                    curArea++;
+                }
             }
         }
-        _min = min(_min, tmp);
+        min_square_area = min(curArea, min_square_area);
     }
-
-    cout << _min;
+    cout << min_square_area;
     return 0;
 }
