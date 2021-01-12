@@ -12,7 +12,7 @@ void rotate() {
     for (int i = 0;i < r;i++) {
         for (int j = 0;j < c;j++) {
             tmp[i][j] = curSticker[i][j];
-        }
+        }   
     }
 
     for (int i = 0;i < c;i++) {

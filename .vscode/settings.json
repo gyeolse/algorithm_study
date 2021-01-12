@@ -11,7 +11,8 @@
         "initializer_list": "cpp",
         "type_traits": "cpp",
         "limits": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "cmath": "cpp"
     },
     "cmake.configureOnOpen": true
 }
