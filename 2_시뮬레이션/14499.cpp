@@ -13,13 +13,13 @@ bool isAvailable(int x, int y) {
 
 vector<int> changeDice(int curCmd, vector<int> dice) {
     //벡터 복사
-    vector<int> tempDice = {0,0,0,0,0,0}; 
+    vector<int> tempDice = { 0,0,0,0,0,0 };
     //curCmd에 따른 주사위 변환 실행
     if (curCmd == 2) {
         tempDice[2] = dice[5];
         tempDice[4] = dice[0];
         tempDice[5] = dice[4];
-        tempDice[0] = dice[2]; 
+        tempDice[0] = dice[2];
 
         tempDice[1] = dice[1];
         tempDice[3] = dice[3];
@@ -41,7 +41,7 @@ vector<int> changeDice(int curCmd, vector<int> dice) {
 
         tempDice[2] = dice[2];
         tempDice[4] = dice[4];
-    }    
+    }
     else if (curCmd == 4) {
         tempDice[5] = dice[1];
         tempDice[1] = dice[0];
@@ -64,22 +64,22 @@ int main() {
         }
     }
 
-    pair<int, int> dice_direction; //다이스의 좌표를 저장하는 변수
-    dice_direction = { x,y };
+    pair<int, int> dice_direction;ㅇ //다이스의 좌표를 저장하는 변수
+        dice_direction = { x,y };
 
     int curCmd = 0;
 
     vector<int> dice = { 0,0,0,0,0,0 };
 
-    int idx=0;
+    int idx = 0;
 
     while (1) {
         idx++;
-        if(idx==(k+1)) break;
-        curCmd=0;
-        cin>>curCmd;
-        int curX = dice_direction.first + dirX[curCmd-1];
-        int curY = dice_direction.second + dirY[curCmd-1];
+        if (idx == (k + 1)) break;
+        curCmd = 0;
+        cin >> curCmd;
+        int curX = dice_direction.first + dirX[curCmd - 1];
+        int curY = dice_direction.second + dirY[curCmd - 1];
         //1. 주사위가 밖으로 나가는 좌표인지 확인 -> 밖에 나가면 무시 (continue)
         if (!isAvailable(curX, curY)) {
             continue;
@@ -94,9 +94,10 @@ int main() {
         // }
         // cout<<endl;
         //3. 주사위 이동 후, 이동한 칸에 쓰인 수를 확인 -> 0? 0아님?
-        if(board[curX][curY] == 0) {
+        if (board[curX][curY] == 0) {
             board[curX][curY] = dice[5];
-        } else {
+        }
+        else {
             dice[5] = board[curX][curY];
             board[curX][curY] = 0;
         }
@@ -105,7 +106,7 @@ int main() {
         //     cout<<dice[i]<<" ";
         // }
         // cout<<endl;
-        cout<<dice[0]<<"\n";
+        cout << dice[0] << "\n";
     }
     return 0;
 }
