@@ -39,7 +39,7 @@ int main() {
 
     //4. k.x
     int k,x;
-    cin>>x>>k; //하... 바본가;;;
+    cin>>x>>k; //하...
     int res=0;
     res = graph[1][k] + graph[k][x];
     if(res >= INF) {
