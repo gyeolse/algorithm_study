@@ -2,16 +2,13 @@
 using namespace std;
 #define INF 987654321
 #define MAX 100001
-
 int n,m,start; //노드, 간선, 노드번호
-
 vector<pair<int,int>> graph[MAX]; 
 int dist[MAX];
 
 void dijk(int start) { 
     //우선순위 큐 사용
     priority_queue<pair<int,int>> pq;
-
     //시작점 처리
     pq.push({0,start});
     dist[start] = 0;
@@ -36,7 +33,6 @@ void dijk(int start) {
             }
         }
     }
-
 }
 int main() {
     ios::sync_with_stdio(false); cin.tie(NULL);
