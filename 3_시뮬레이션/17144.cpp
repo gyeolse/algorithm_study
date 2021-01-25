@@ -7,7 +7,6 @@ pair<int, int> bottom_purifier;
 bool chkLoc = false;
 int board[50][50]; //크기
 
-int dustSize = 0; //미세먼지 양
 
 int dirX[4] = {1,0,-1,0};
 int dirY[4] = {0,1,0,-1};
@@ -35,12 +34,14 @@ void dustSpread() {
         for(int dir=0;dir<4;dir++) {
             int curX=cur.first + dirX[dir];
             int curY=cur.second + dirY[dir];
-            if(board[curX][curY] == -1 ) continue;
-            if(curX<0 || curY<0 || curX>=r || curY>=c) continue;
-            cntArea++;
+            if(board[curX][curY] !=-1) {
+                if(curX>=0 && curY>=0 && curX < r && curY < c) {
+                    cntArea++;
+                }
+            }
         }
         //2) 카운팅된 만큼 값을 설정해주고, 변경해준다.
-        int curDust = board[cur.first][cur.second];
+        int curDust = tempBoard[cur.first][cur.second];
         int blowingDust = curDust/5;
 
         int modifyDust = curDust - (blowingDust*cntArea);
@@ -49,9 +50,11 @@ void dustSpread() {
         for(int dir=0;dir<4;dir++) {
             int curX=cur.first + dirX[dir];
             int curY=cur.second + dirY[dir];
-            if(board[curX][curY] == -1 ) continue;
-            if(curX<0 || curY<0 || curX>=r || curY>=c) continue;
-            tempBoard[curX][curY] = blowingDust;
+            if(board[curX][curY] !=-1) {
+                if(curX>=0 && curY>=0 && curX < r && curY < c) {
+                    tempBoard[curX][curY] += blowingDust;
+                }
+            }
         }
     }
     //마지막. 임시배열과 현재보드와 swap
@@ -66,6 +69,42 @@ void dustSpread() {
 
 //공기청정기 구동 함수
 void operate_purifier() {
+    int bottomX = bottom_purifier.first; int bottomY = bottom_purifier.second;
+    int topX = top_purifier.first; int topY = top_purifier.second;
+
+    //1. 왼쪽 세로
+    for(int i=topX-1;i>0;i--) {
+        board[i][0] = board[i-1][0];
+    }
+    //2. 위쪽
+    for(int i=0;i<c-1;i++){
+        board[0][i] = board[0][i+1];
+    }
+    //3. 오른쪽 세로
+    for(int i=1;i<=topX;i++) {
+        board[i-1][c-1] = board[i][c-1];
+    }
+    //아래
+    for(int i=c-1;i>1;i--) {
+        board[topX][i] = board[topX][i-1];
+    }
+    board[topX][1] = 0;
+    
+////////////밑에 공기청정기
+    for(int i=bottomX+1;i<r-1;i++){
+        board[i][0] = board[i+1][0];
+    }
+    for(int i=0;i<c-1;i++){
+        board[r-1][i] = board[r-1][i+1];
+    }
+    for(int i=r-1;i>=bottomX;i--) {
+        board[i][c-1] = board[i-1][c-1];
+    }
+    for(int i=c-1;i>1;i--) {
+        board[bottomX][i] = board[bottomX][i-1];
+    }
+
+    board[bottomX][1] = 0;
 
 }
 
@@ -85,8 +124,7 @@ int main() {
         }
     }
     //2. t초 동안 진행
-    while(t--) {
-
+    for(int i=0;i<t;i++){
         //1. 미세먼지 확산 함수
         dustSpread();
 
@@ -94,12 +132,13 @@ int main() {
         operate_purifier();
     }
 
+    int dustSize = 0; //미세먼지 양
+
     //3. 미세먼지 출력
     for(int i=0;i<r;i++){
         for(int j=0;j<c;j++){
-            if(board[i][j] > 0 ) {
-                dustSize++;
-            }
+            if(board[i][j] == -1 )continue;
+            dustSize += board[i][j];
         }
     }
     cout<<dustSize<<"\n";
