@@ -13,25 +13,19 @@ int main() {
     }
     sort(arr, arr + n);
 
-    long long start = 0;
-    long long end = n - 1;
-    long long res = arr[start] - arr[end];
+    long long start = 0, end = 0;
+    long long res = arr[n - 1] - arr[0];
 
-    while (start < end) {
-        long long cur = arr[start] - arr[end];
-
-        if (abs(cur) >= abs(m)) {
-            res = abs(cur);
-        }
-
-        if (cur <= 0) {
+    while (start <= end && end < n) {
+        long long cur = arr[end] - arr[start];
+        if (cur >= m) { //크거나 같은 경우
+            res = min(cur, res);
             start++;
         }
-        else {
+        else { //작은 경우
             end++;
         }
     }
-
     cout << res << "\n";
     return 0;
 }
