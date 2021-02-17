@@ -31,8 +31,12 @@ int main() {
         } 
     }
 
-    //
+    if(isExist == true) {
+        maxValue = (maxValue,)
+    }
     while(start <= end && start <= n-k && end <= n-1) {
+
+
         //1.coupon이 있는지, 
         if(isExist) {
             maxValue = max(maxValue, (int)chk.size()+1);            
