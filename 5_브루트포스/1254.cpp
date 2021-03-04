@@ -1,41 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-string alpha = "abcdefghijklmnopqrstuvwxyz";
+string s;
+int sz;
+int res = 0;
+bool isPell(int n) {
+    int half = (sz - n) / 2;
+    for (int i = 0;i < half;i++) {
+        if (s[n + i] != s[sz - 1 - i]) return false;
+    }
+    return true;
+}
 
 int main() {
-    string s;
     cin >> s;
+    sz = s.size();
 
-    string res = s;
-
-    while (1) {
-        bool isAvailable = false;
-        for (int i = 0;i < 26;i++) {
-            string temp = res + alpha[i];
-
-            int start = 0;
-            int end = res.size() - 1;
-
-            int cnt = 0;
-            while (start < end) {
-                if (res[start] == res[end]) cnt++;
-            }
-
-            if (cnt == res.size() / 2) {
-                res = temp;
-                isAvailable = true;
-                break;
-            }
-            cout << temp << " ";
+    for (int i = 0;i < sz;i++) {
+        if (isPell(i)) {
+            res = sz + i;
+            cout << res << "\n";
+            return 0;
         }
-
-        if (isAvailable) {
-            break;
-        }
-
     }
-
-    cout << res.length() << "\n";
-    return 0;
 }
