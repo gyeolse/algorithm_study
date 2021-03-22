@@ -1,63 +1,34 @@
 #include <bits/stdc++.h>
-#define MAX 101
-
 using namespace std;
-int board[MAX][MAX];
-
 int r, c, k;
-int ans = 0;
-
-void input();
-void print();
-
-// i, j, k
-bool isExist(int i, int j, int k) {
-    if (board[i][j] == k) return  true;
-    return false;
-}
+int board[101][101];
 
 int main() {
-    input();
+    cin >> r >> c >> k; //r,c의 위치가 k가 되는지를 확인
 
-    while (1) {
-
-        // r, c
-        vector<vector<int>> curVec;
-        for (int i = 0;i < r;i++) {
-            for (int j = 0;j < c;j++) {
-                curVec[i].push_back(j);
-            }
-        }
-
-
-
-
-
-
-
-        if (isExist(r, c, k) == true) break;
-        if (ans == 100) break;
-        ans++;
-    }
-
-    print();
-    return 0;
-}
-
-void print() {
-    if (ans == 100) {
-        cout << -1 << "\n";
-    }
-    else {
-        cout << ans << "\n";
-    }
-}
-
-void input() {
-    cin >> r >> c >> k;
-    for (int i = 0;i < r;i++) {
-        for (int j = 0;j < c;j++) {
+    for (int i = 0;i < 3;i++) {
+        for (int j = 0;j < 3;j++) {
             cin >> board[i][j];
         }
     }
+    // 시간 100초 카운트
+    int t_ = 100; 
+    while(t_--) {
+        
+        
+        // A[r][c]에 들어있는 k 값 확인
+        if(board[r][c] == k) break;
+    }
+
+
+
+    // 출력
+    if(board[r][c] == k ) {
+        cout<<100-t_<<"\n";
+    }
+    else {
+        cout<<-1<<"\n";
+    }
+
+    return 0;
 }

@@ -6,3 +6,5 @@
 .vscode/tasks.json
 
 /temp
+
+/3_시뮬레이션/test.cpp
