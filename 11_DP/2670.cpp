@@ -2,7 +2,7 @@
 using namespace std;
 int n;
 double arr[10001];
-double mulArr[10001];
+double multiply[10001];
 
 int main(void) {
     cin >> n;
@@ -10,22 +10,20 @@ int main(void) {
         cin >> arr[i];
     }
 
-    int res = 0;
-    int start = 0; int end = 0;
-
-    mulArr[0] = arr[0];
-
-    for (int i = 1;i < n;i++) {
-        mulArr[i] = mulArr[i - 1] + arr[i];
-    }
-
+    // 1. multipy 배열을 만들어줌 
     for (int i = 0;i < n;i++) {
-        cout << mulArr[i] << " ";
+        multiply[i] = arr[i];
     }
-    // while (start <= end && end <= n) {
 
-    // }
+    // 2. 배열 세팅 
+    double res = 0.0;
+    for (int i = 1;i < n;i++) {
+        if (multiply[i] * multiply[i - 1] >= multiply[i]) {
+            multiply[i] = multiply[i - 1] * multiply[i];
+        }
+        res = max(res, multiply[i]);
+    }
 
-
+    printf("%.3lf", res);
     return 0;
 }
