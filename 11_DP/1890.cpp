@@ -1,21 +1,38 @@
 #include <bits/stdc++.h>
-#define MAX 1000001
-
 using namespace std;
 
 int n;
-int dp[MAX];
+int board[110][110];
+long long dp[110][110];
+int res = 0;
 
 int main() {
     cin >> n;
 
-    dp[1] = 1;
-    dp[2] = 2;
-
-    for (int i = 3;i <= n;i++) {
-        dp[i] = (dp[i - 1] + dp[i - 2]) % 15746;
+    for (int i = 0;i < n;i++) {
+        for (int j = 0;j < n;j++) {
+            cin >> board[i][j];
+        }
     }
 
-    cout << dp[n] % 15746 << "\n";
+    dp[0][0] = 1;
+
+    for (int i = 0;i < n;i++) {
+        for (int j = 0;j < n;j++) {
+            // 예외 경우
+            if ((i == n - 1 && j == n - 1) || dp[i][j] == 0) continue;
+
+            //nextX, nextY, value 
+            int value = board[i][j];
+            int nextX = i + value;
+            int nextY = j + value;
+
+            if (nextX < n) dp[nextX][j] += dp[i][j];
+            if (nextY < n) dp[i][nextY] += dp[i][j];
+
+        }
+    }
+
+    cout << dp[n - 1][n - 1] << "\n";
     return 0;
 }
